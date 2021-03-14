@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinochleGame", "PinochleGame\PinochleGame.csproj", "{63683BC1-895B-401A-89F2-570E0CEB3343}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63683BC1-895B-401A-89F2-570E0CEB3343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63683BC1-895B-401A-89F2-570E0CEB3343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63683BC1-895B-401A-89F2-570E0CEB3343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63683BC1-895B-401A-89F2-570E0CEB3343}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C00C4BA-9346-4693-949E-9D96D1AED631}
+	EndGlobalSection
+EndGlobal
