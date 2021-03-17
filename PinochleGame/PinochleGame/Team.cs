@@ -4,7 +4,9 @@ using System.Text;
 
 namespace PinochleGame
 {
-    class NewClass
+    class Team
     {
+        public List<Player> Players { get; set; }
+        public int Points { get; set; }
     }
 }
