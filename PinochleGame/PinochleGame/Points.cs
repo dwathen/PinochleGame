@@ -299,9 +299,10 @@ namespace PinochleGame
             return 0;
         }
 
-        public static bool IsPointer(int card)
+        public static bool IsPointer(Cards card)
         {
-            if ()
+            if (Deck.DeterminePointValue(card) == 1)
+                return true;
 
             return false;
         }

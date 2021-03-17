@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PinochleGame
 {
-    enum Cards
+    public enum Cards
     {
         // Hearts
         AceOfHearts1,
@@ -101,9 +101,10 @@ namespace PinochleGame
                 return "Spades";
         }
 
-        public static int DeterminePointValue(int card)
+        public static int DeterminePointValue(Cards card)
         {
-
+            if (pointerCards.Contains(card))
+                return 1;
 
             return 0;
         }
