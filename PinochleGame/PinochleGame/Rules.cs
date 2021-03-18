@@ -21,7 +21,7 @@ namespace PinochleGame
             else if (hand[suitLed].Count > 0)
                 cardsToPlay.AddRange(DetermineCards(hand[suitLed], higherCards, suitLed));
             else if (hand[suitLed].Count == 0 && hand[trump].Count > 1)
-                cardsToPlay.AddRange(DetermineCards(hand[trump], higherCards, suitLed));
+                cardsToPlay.AddRange(DetermineCards(hand[trump], higherCards, trump));
 
             return cardsToPlay;
         }

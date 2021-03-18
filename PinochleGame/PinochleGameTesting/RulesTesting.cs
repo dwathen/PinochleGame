@@ -393,5 +393,85 @@ namespace PinochleGameTesting
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void DeterminePlaySomeCardsInSuitTesting()
+        {
+            // Arrange
+            Dictionary<string, List<string>> hand = new Dictionary<string, List<string>>();
+            hand.Add("Hearts", new List<string>() { "ACE", "ACE", "TEN", "TEN" });
+            hand.Add("Clubs", new List<string>() { "ACE", "ACE", "TEN", "KING" });
+            hand.Add("Diamonds", new List<string>() { "ACE", "ACE" });
+            hand.Add("Spades", new List<string>() { "ACE", "TEN" });
+            List<string> pile = new List<string>() { "CQUEEN", "CTEN" };
+            string trump = "Hearts";
+            List<string> expected = new List<string>() { "CACE", "CACE" };
+
+            // Act
+            List<string> actual = Rules.DeterminePlay(hand, pile, trump);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void DeterminePlayTrumpTesting()
+        {
+            // Arrange
+            Dictionary<string, List<string>> hand = new Dictionary<string, List<string>>();
+            hand.Add("Hearts", new List<string>() { "ACE", "ACE", "TEN", "TEN", "QUEEN", "QUEEN" });
+            hand.Add("Clubs", new List<string>() { "ACE", "ACE", "TEN", "KING" });
+            hand.Add("Diamonds", new List<string>() { "ACE", "ACE" });
+            hand.Add("Spades", new List<string>());
+            List<string> pile = new List<string>() { "SQUEEN", "SKING", "SACE" };
+            string trump = "Hearts";
+            List<string> expected = new List<string>() { "HACE", "HACE", "HTEN", "HTEN", "HQUEEN", "HQUEEN" };
+
+            // Act
+            List<string> actual = Rules.DeterminePlay(hand, pile, trump);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void DeterminePlayAlreadyTrumpedTesting()
+        {
+            // Arrange
+            Dictionary<string, List<string>> hand = new Dictionary<string, List<string>>();
+            hand.Add("Hearts", new List<string>() { "ACE", "ACE", "TEN", "QUEEN", "JACK", "NINE" });
+            hand.Add("Clubs", new List<string>() { "ACE", "ACE", "TEN", "KING" });
+            hand.Add("Diamonds", new List<string>() { "ACE", "ACE" });
+            hand.Add("Spades", new List<string>());
+            List<string> pile = new List<string>() { "SQUEEN", "SKING", "HKING" };
+            string trump = "Hearts";
+            List<string> expected = new List<string>() { "HACE", "HACE", "HTEN" };
+
+            // Act
+            List<string> actual = Rules.DeterminePlay(hand, pile, trump);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void DeterminePlayNoTrumpOrSuitTesting()
+        {
+            // Arrange
+            Dictionary<string, List<string>> hand = new Dictionary<string, List<string>>();
+            hand.Add("Hearts", new List<string>() { "ACE", "ACE" });
+            hand.Add("Clubs", new List<string>() { "ACE", "ACE", "TEN", "KING" });
+            hand.Add("Diamonds", new List<string>());
+            hand.Add("Spades", new List<string>());
+            List<string> pile = new List<string>() { "SQUEEN", "SKING", "DNINE" };
+            string trump = "Diamonds";
+            List<string> expected = new List<string>() { "HACE", "HACE", "CACE", "CACE", "CTEN", "CKING" };
+
+            // Act
+            List<string> actual = Rules.DeterminePlay(hand, pile, trump);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
