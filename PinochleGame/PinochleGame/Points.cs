@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PinochleGame
 {
-    public static class CalculatePoints
+    public static class Points
     {
 
         public static int CalculateTrickPoints(List<string> pile, int trickNumber)
@@ -17,7 +17,9 @@ namespace PinochleGame
 
             foreach (string card in pile)
             {
-                if (card == "ACE" || card == "TEN" || card == "KING")
+                string cardType = card.Substring(1);
+
+                if (cardType == "ACE" || cardType == "TEN" || cardType == "KING")
                     points++;
             }
 
@@ -91,7 +93,7 @@ namespace PinochleGame
 
             if (HasDoubleNines(hand, trump))
                 points += 2;
-            else if (HasDoubleNines(hand, trump))
+            else if (HasNine(hand, trump))
                 points += 1;
 
             return points;
@@ -297,14 +299,6 @@ namespace PinochleGame
             }
 
             return 0;
-        }
-
-        public static bool IsPointer(Cards card)
-        {
-            if (Deck.DeterminePointValue(card) == 1)
-                return true;
-
-            return false;
         }
     }
 }
