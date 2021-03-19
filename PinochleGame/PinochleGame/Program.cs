@@ -9,6 +9,9 @@ namespace PinochleGame
         {
             Game.InitializeGame();
 
+            foreach (Player player in Game.Players)
+                Game.PrintHand(player);
+
             while (Game.IsPlaying)
             {
                 Game.BidRound();

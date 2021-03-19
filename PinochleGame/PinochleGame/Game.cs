@@ -11,6 +11,7 @@ namespace PinochleGame
         public static List<string> PlayPile { get; set; }
         public static Stack<string> Cards { get; set; }
         public static Player Dealer { get; set; }
+        public static string Trump { get; set; }
         public static bool IsPlaying { get; set; }
         public static int Bid { get; set; }
 
@@ -142,6 +143,23 @@ namespace PinochleGame
                 return true;
             else
                 return false;
+        }
+
+        public static void PrintHand(Player player)
+        {
+            Console.WriteLine(player.FirstName + "'s hand");
+
+            foreach (KeyValuePair<string, List<string>> suit in player.Hand)
+            {
+                Console.WriteLine(suit.Key);
+
+                foreach (string card in suit.Value)
+                {
+                    Console.WriteLine(card);
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }
