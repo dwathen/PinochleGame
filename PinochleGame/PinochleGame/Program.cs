@@ -7,8 +7,12 @@ namespace PinochleGame
     {
         static void Main(string[] args)
         {
-            Deck.InitializeDeck();
-            Console.WriteLine("This is Pinochle.");
+            Game.InitializeGame();
+
+            while (Game.IsPlaying)
+            {
+                Game.BidRound();
+            }
         }
     }
 }

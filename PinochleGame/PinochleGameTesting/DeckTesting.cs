@@ -1,15 +1,16 @@
-﻿using System;
+﻿using NUnit.Framework;
+using PinochleGame;
 using System.Collections.Generic;
 
-namespace PinochleGame
+namespace PinochleGameTesting
 {
-    public static class Deck
+    public class DeckTesting
     {
-        private static Random rng = new Random();
-
-        public static Stack<string> InitializeDeck()
+        [Test]
+        public void InitializeDeckTesting()
         {
-            List<string> cards = new List<string>()
+            // Arrange
+            List<string> cards = new List<string>
             {
                 "HACE",
                 "HACE",
@@ -63,42 +64,31 @@ namespace PinochleGame
                 "SNINE",
                 "SNINE"
             };
+            Stack<string> initial = new Stack<string>(cards);
 
-            cards = Shuffle<string>(cards);
+            // Act
+            Stack<string> actual = Deck.InitializeDeck();
 
-            Stack<string> deck = new Stack<string>(cards);
-
-            return deck;
+            // Assert
+            Assert.AreNotEqual(initial, actual);
         }
 
-        public static List<T> Shuffle<T>(List<T> list)
+        [Test]
+        public void CreateHandTesting()
         {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
+            // Arrange
+            List<string> cards = new List<string>() { "CACE", "HTEN", "SQUEEN", "SQUEEN", "DJACK", "CNINE", "SKING", "DQUEEN", "CKING", "HJACK", "HNINE", "DTEN" };
+            Dictionary<string, List<string>> expected = new Dictionary<string, List<string>>();
+            expected.Add("Hearts", new List<string>() { "TEN", "JACK", "NINE" });
+            expected.Add("Clubs", new List<string>() { "ACE", "NINE", "KING" });
+            expected.Add("Diamonds", new List<string>() { "JACK", "QUEEN", "TEN" });
+            expected.Add("Spades", new List<string>() { "QUEEN", "QUEEN", "KING" });
 
-            return list;
-        }
+            // Act
+            Dictionary<string, List<string>> actual = Deck.CreateHandForPlayer(cards);
 
-        public static Dictionary<string, List<string>> CreateHandForPlayer(List<string> cards)
-        {
-            Dictionary<string, List<string>> hand = new Dictionary<string, List<string>>();
-
-            hand.Add("Hearts", new List<string>());
-            hand.Add("Clubs", new List<string>());
-            hand.Add("Diamonds", new List<string>());
-            hand.Add("Spades", new List<string>());
-
-            foreach (string card in cards)
-                hand[Rules.DetermineSuit(card)].Add(card.Substring(1));
-
-            return hand;
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
     }
 }
