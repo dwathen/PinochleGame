@@ -10,18 +10,39 @@ namespace PinochleGame
         public static List<string> DeterminePlay(Dictionary<string, List<string>> hand, List<string> pile, string trump)
         {
             List<string> cardsToPlay = new List<string>();
-            List<string> higherCards = GetHigherCards(pile[DetermineHighestCard(pile, trump)].Substring(1));
-            string suitLed = DetermineSuit(pile[0]);
+            bool isTrumped = false;
 
-            if (hand[trump].Count == 0 && hand[suitLed].Count == 0)
+            foreach (string card in pile)
+            {
+                if (DetermineSuit(card) == trump)
+                    isTrumped = true;
+            }
+
+            if (pile.Count == 0)
             {
                 foreach (KeyValuePair<string, List<string>> suit in hand)
-                    cardsToPlay.AddRange(DetermineCards(suit.Value, higherCards, suit.Key));
+                    cardsToPlay.AddRange(DetermineCards(suit.Value, new List<string>(), suit.Key));
             }
-            else if (hand[suitLed].Count > 0)
-                cardsToPlay.AddRange(DetermineCards(hand[suitLed], higherCards, suitLed));
-            else if (hand[suitLed].Count == 0 && hand[trump].Count > 1)
-                cardsToPlay.AddRange(DetermineCards(hand[trump], higherCards, trump));
+            else
+            {
+                List<string> higherCards = GetHigherCards(pile[DetermineHighestCard(pile, trump)].Substring(1));
+                string suitLed = DetermineSuit(pile[0]);
+
+                if (hand[trump].Count == 0 && hand[suitLed].Count == 0)
+                {
+                    foreach (KeyValuePair<string, List<string>> suit in hand)
+                        cardsToPlay.AddRange(DetermineCards(suit.Value, suit.Key));
+                }
+                else if (hand[suitLed].Count > 0)
+                {
+                    if (isTrumped && suitLed != trump)
+                        cardsToPlay.AddRange(DetermineCards(hand[suitLed], suitLed));
+                    else
+                        cardsToPlay.AddRange(DetermineCards(hand[suitLed], higherCards, suitLed));
+                }
+                else if (hand[suitLed].Count == 0 && hand[trump].Count > 0)
+                    cardsToPlay.AddRange(DetermineCards(hand[trump], higherCards, trump));
+            }
 
             return cardsToPlay;
         }
@@ -39,12 +60,22 @@ namespace PinochleGame
             if (cardsToPlay.Count == 0 || higherCards.Count == 0)
             {
                 for (int i = 0; i < hand.Count; i++)
-                    hand[i] = suit.Substring(0, 1) + hand[i];
+                    cardsToPlay.Add(suit.Substring(0, 1) + hand[i]);
 
-                return hand;
+                return cardsToPlay;
             }
             else
                 return cardsToPlay;
+        }
+
+        public static List<string> DetermineCards(List<string> hand, string suit)
+        {
+            List<string> cardsToPlay = new List<string>();
+
+            for (int i = 0; i < hand.Count; i++)
+                cardsToPlay.Add(suit.Substring(0, 1) + hand[i]);
+
+            return cardsToPlay;
         }
 
         public static int DetermineHighestCard(List<string> pile, string trump)
@@ -60,10 +91,13 @@ namespace PinochleGame
 
                 if (card == pile[indexOfHighestCard])
                     continue;
-                else if (suit == startSuit)
+                else if (suit == startSuit && startSuit != trump)
                 {
-                    highestCard = suit.Substring(0, 1) + DetermineHighestCardInSuit(highestCard.Substring(1), card.Substring(1));
-                    indexOfHighestCard = pile.IndexOf(highestCard);
+                    if (DetermineSuit(highestCard) != trump)
+                    {
+                        highestCard = suit.Substring(0, 1) + DetermineHighestCardInSuit(highestCard.Substring(1), card.Substring(1));
+                        indexOfHighestCard = pile.IndexOf(highestCard);
+                    }
                 }
                 else if (suit == trump && DetermineSuit(highestCard) == trump)
                 {

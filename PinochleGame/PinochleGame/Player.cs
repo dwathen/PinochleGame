@@ -38,6 +38,12 @@ namespace PinochleGame
             Hand = tempHand;
         }
 
+        public void DealNewHand(Dictionary<string, List<string>> hand)
+        {
+            Hand = hand;
+            OrderHand();
+        }
+
         public List<string> OrderCards(List<string> suit)
         {
             List<string> orderedCards = new List<string>();
@@ -61,6 +67,57 @@ namespace PinochleGame
                 orderedCards.Add("NINE");
 
             return orderedCards;
+        }
+
+        public void AddCardsToHand(List<string> cards)
+        {
+            foreach (string card in cards)
+                Hand[Rules.DetermineSuit(card)].Add(card.Substring(1));
+
+            OrderHand();
+        }
+
+        public void RemoveCardsFromHand(List<string> cards)
+        {
+            foreach (string card in cards)
+                Hand[Rules.DetermineSuit(card)].Remove(card.Substring(1));
+
+            OrderHand();
+        }
+
+        public void RemoveCardFromHand(string card)
+        {
+            Hand[Rules.DetermineSuit(card)].Remove(card.Substring(1));
+
+            OrderHand();
+        }
+
+        public bool HasCards()
+        {
+            foreach (KeyValuePair<string, List<string>> suit in Hand)
+            {
+                if (suit.Value.Count > 0)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void PrintHand()
+        {
+            Console.WriteLine(FirstName + "'s hand");
+
+            foreach (KeyValuePair<string, List<string>> suit in Hand)
+            {
+                Console.WriteLine(suit.Key);
+
+                foreach (string card in suit.Value)
+                {
+                    Console.WriteLine(card);
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }

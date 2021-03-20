@@ -12,7 +12,7 @@ namespace PinochleGame
         {
             int points = 0;
 
-            if (trickNumber == 25)
+            if (trickNumber == 12)
                 points++;
 
             foreach (string card in pile)
